@@ -1,9 +1,11 @@
 import React,{useEffect,useState} from "react"; 
 
-const Country = () => {
+function CountryCard({ name, flagurl }){
+ console.log(name)
   return (
-    <div>
-      <p>Country</p>
+    <div style={{display:"flex", flexDirection:"column", width:"150px",height:"150px", border:"1px solid gray", borderRadius:"10px", justifyContent:"center",alignItems:"center",padding:"10px"}} >
+      <img src={flagurl} alt={name} width="100px" height="100px"/>
+      <h3>{name}</h3>
     </div>
   )
     }
@@ -14,15 +16,18 @@ function Countries() {
 const [countries,setCountries]=useState([])
   
   useEffect(() => {
-   fetch("https://xcountries-backend.azurewebsites.net/all").then((res)=>res.json()).then((data)=>setCountries(data))
+    fetch("https://xcountries-backend.azurewebsites.net/all").then((res) => res.json()).then((data) => setCountries(data))
+    .catch((err)=>console.error("Error fetching data:"+err));
+    
   }, []);
 
-  console.log(countries)
+ // console.log(countries)
   return (
-    <div style={{display:"flex", flexDirection:"column",flexWrap:"wrap"}}>
-      {countries.map((item) => {
-        return <Country />
-      })}
+    <div style={{display:"flex" ,flexWrap:"wrap",gap:"10px"}}>
+      {countries.map((item) => (
+        //console.log(item.flag)
+        <CountryCard name={item.name} flagurl={item.flag} key={item.abbr} />
+      ))}
     </div>
   )
 }
