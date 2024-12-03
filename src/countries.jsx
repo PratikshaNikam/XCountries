@@ -17,7 +17,7 @@ const [countries,setCountries]=useState([])
   
   useEffect(() => {
     fetch("https://xcountries-backend.azurewebsites.net/all").then((res) => res.json()).then((data) => setCountries(data))
-    .catch((err)=>console.error("Error fetching data:"+err));
+    .catch((error)=>console.error("Error fetching data:", + error));
     
   }, []);
 
